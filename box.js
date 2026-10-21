@@ -33,6 +33,7 @@ const mix = (A, B, t) => {
 
 let objs = null;      // Spline objects + their base transforms
 let spinAngle = 0;
+let cur = null;
 let pointer = { x: 0, y: 0 };
 let last = performance.now();
 
@@ -76,7 +77,16 @@ function compute() {
 function frame(now) {
   const dt = Math.min(0.05, (now - last) / 1000);
   last = now;
-  const st = compute();
+  const target = compute();
+  let st = null;
+  if (target) {
+    // ease toward the target so the box glides instead of snapping
+    const k = reduce ? 1 : 1 - Math.exp(-dt * 7);
+    if (!cur) cur = JSON.parse(JSON.stringify(target));
+    for (const key of ['x', 'y', 'w', 'opacity']) cur[key] = lerp(cur[key], target[key], k);
+    for (const key in target.pose) cur.pose[key] = lerp(cur.pose[key] ?? target.pose[key], target.pose[key], k);
+    st = cur;
+  }
   if (st) {
     const L = layer.offsetWidth;
     const s = (st.w * st.pose.size) / L;

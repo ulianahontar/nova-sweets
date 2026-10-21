@@ -105,7 +105,10 @@ function applyPose(p, dt) {
   sleeve.position.x = base.sleeveX + 460 * ease(clamp(p.sleeve));
   sleeve.visible = p.sleeve < 0.92;
   logoNova.visible = p.logo < 0.5;
-  logoClient.visible = p.logo >= 0.5;
+  if (logoClient) {
+    logoClient.visible = p.logo >= 0.5;
+    logoClient.position.y = p.logo >= 0.5 ? base.clientY + 1.9 : base.clientY;
+  }
   sweets.position.y = base.sweetsY + 70 * ease(clamp((p.sweets - 0.3) / 0.7));
 }
 
@@ -128,18 +131,19 @@ async function init() {
     const Application = await loadRuntime();
     const app = new Application(canvas);
     await app.load(SCENE_URL);
-    if (typeof app.setBackgroundColor === 'function') {
-      try { app.setBackgroundColor('transparent'); } catch (e) { /* keep scene background */ }
-    }
+    try { app.setBackgroundColor('rgba(0,0,0,0)'); } catch (e) { /* keep scene background */ }
+    const floor = app.findObjectByName('Shadow Floor');
+    if (floor) floor.visible = false;
     const f = (n) => app.findObjectByName(n);
     const box = f('Box'), hinge = f('Lid-Hinge'), sleeve = f('Sleeve');
     const logoNova = f('Logo-NOVA'), logoClient = f('Logo-Client'), sweets = f('Sweets');
-    if (!box || !hinge || !sleeve || !logoNova || !logoClient || !sweets) throw new Error('Scene objects missing');
+    if (!box || !hinge || !sleeve || !logoNova || !sweets) throw new Error('Scene objects missing');
     objs = {
       box, hinge, sleeve, logoNova, logoClient, sweets,
       base: {
         boxRotY: box.rotation.y, boxRotX: box.rotation.x,
         hingeRotX: hinge.rotation.x, sleeveX: sleeve.position.x, sweetsY: sweets.position.y,
+        clientY: logoClient ? logoClient.position.y : 0,
       },
     };
     if (layer.dataset.zoom) app.setZoom(parseFloat(layer.dataset.zoom));

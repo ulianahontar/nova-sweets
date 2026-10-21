@@ -92,8 +92,10 @@ function frame(now) {
     const s = (st.w * st.pose.size) / L;
     layer.dataset.scale = s;
     layer.style.transform = `translate(${st.x - (L * s) / 2}px, ${st.y - (L * s) / 2}px) scale(${s})`;
+    const hidden = st.opacity < 0.01;
+    layer.classList.toggle('off', hidden);
     layer.style.opacity = st.opacity.toFixed(3);
-    if (objs) applyPose(st.pose, dt);
+    if (objs && !hidden) applyPose(st.pose, dt);
   }
   requestAnimationFrame(frame);
 }
@@ -160,6 +162,7 @@ async function init() {
     clearTimeout(failTimer);
     layer.classList.remove('fallback');
     window.__nova = app; // handy for tuning from the console
+    objs.app = app;
   } catch (e) {
     clearTimeout(failTimer);
     layer.classList.add('fallback');

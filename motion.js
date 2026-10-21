@@ -6,7 +6,8 @@ const easeInOutQuart = (t) => (t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t
 let lenis = null;
 
 async function initLenis() {
-  if (reduce) return;
+  // touch devices keep native scrolling: it is already smooth and never fights sticky/fixed layers
+  if (reduce || matchMedia('(hover: none), (pointer: coarse)').matches) return;
   const urls = ['https://unpkg.com/lenis@1/dist/lenis.mjs', 'https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.mjs'];
   for (const u of urls) {
     try {

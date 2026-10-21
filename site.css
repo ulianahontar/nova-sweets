@@ -171,3 +171,11 @@ body.menu-open #boxLayer { visibility: hidden; }
 .total .sum { flex-direction: column; align-items: flex-start; gap: 6px; }
 .total .sum b { display: inline-block; min-width: 6ch; font-variant-numeric: tabular-nums lining-nums; font-feature-settings: "tnum" 1, "lnum" 1; white-space: nowrap; }
 .total ul li span:last-child { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Collection cards: link always at the bottom, aligned across cards */
+.pcard { height: 100%; }
+.pcard > .link { margin-top: auto; align-self: flex-start; }
+.cards { align-items: stretch; }
+/* Builder meta: text and link on one baseline */
+.preview .meta { align-items: baseline; }
+.preview .meta .link { padding-block: 0 6px; font-size: inherit; }

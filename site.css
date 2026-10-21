@@ -64,3 +64,30 @@
 #boxLayer.fallback canvas { display: none; }
 #boxLayer.fallback #boxFallback { display: block; }
 @media (max-width: 640px) { #boxLayer { width: 380px; height: 380px; } }
+
+/* ---- One shape system ----
+   Controls you press = full pill (buttons, chips, stepper, switch).
+   Surfaces that hold content = 16px (cards, tiles, photos, panels).
+   Small marks (checkbox) = 6px. Nothing square, nothing in between. */
+:root { --r-pill: 999px; --r-card: 16px; --r-mark: 6px; }
+.btn, .top .btn, button.btn { border-radius: var(--r-pill); }
+.stepper { border-radius: var(--r-pill); overflow: hidden; padding-inline: 4px; }
+.pimg, .cell, .total, .sweet, .terms div, .cert, .ph, .hitem .ico, .traywrap, .sent { border-radius: var(--r-card); }
+.slots { border-radius: 10px; }
+
+/* custom checkbox in the same language */
+.check input {
+  appearance: none; -webkit-appearance: none; margin: 0; flex: none;
+  width: 20px; height: 20px; border-radius: var(--r-mark);
+  border: 1px solid var(--t24); background: var(--card); display: grid; place-items: center;
+  transition: background .25s var(--ease), border-color .25s;
+}
+.check input:checked { background: var(--choc); border-color: var(--choc); }
+.check input:checked::after { content: ""; width: 9px; height: 5px; border: 2px solid var(--cream); border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+
+/* custom range slider: thin chocolate track, round thumb */
+input[type=range] { -webkit-appearance: none; appearance: none; height: 20px; background: transparent; }
+input[type=range]::-webkit-slider-runnable-track { height: 2px; background: var(--t24); border-radius: var(--r-pill); }
+input[type=range]::-moz-range-track { height: 2px; background: var(--t24); border-radius: var(--r-pill); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--choc); margin-top: -8px; border: 3px solid var(--cream); box-shadow: 0 0 0 1px var(--choc); }
+input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--choc); border: 3px solid var(--cream); box-shadow: 0 0 0 1px var(--choc); }

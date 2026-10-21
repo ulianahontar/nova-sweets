@@ -79,36 +79,3 @@ document.querySelectorAll('[data-count], #total').forEach((el) => io.observe(el)
 
 initLenis();
 
-// Prepare buttons for the label roll + magnetic pull.
-function prepButtons(root = document) {
-  root.querySelectorAll('.btn:not([data-prepped])').forEach((b) => {
-    b.dataset.prepped = '1';
-    [...b.childNodes].forEach((n) => {
-      if (n.nodeType === 3 && n.textContent.trim()) {
-        const l = document.createElement('span');
-        l.className = 'lbl';
-        const i = document.createElement('span');
-        i.textContent = n.textContent.trim();
-        l.appendChild(i);
-        b.replaceChild(l, n);
-      }
-    });
-    const arr = b.querySelector('.arr');
-    if (arr && !arr.firstElementChild) { const i = document.createElement('span'); i.textContent = arr.textContent; arr.textContent = ''; arr.appendChild(i); }
-  });
-}
-prepButtons();
-new MutationObserver(() => prepButtons()).observe(document.body, { childList: true, subtree: true });
-
-if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.addEventListener('pointermove', (e) => {
-    const b = e.target.closest('.btn');
-    document.querySelectorAll('.btn[data-mag]').forEach((o) => { if (o !== b) { o.style.transform = ''; o.removeAttribute('data-mag'); } });
-    if (!b) return;
-    const r = b.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-    b.dataset.mag = '1';
-    b.style.transform = `translate(${dx * 0.18}px, ${dy * 0.28}px)`;
-  }, { passive: true });
-  document.addEventListener('pointerleave', () => document.querySelectorAll('.btn[data-mag]').forEach((o) => { o.style.transform = ''; o.removeAttribute('data-mag'); }));
-}

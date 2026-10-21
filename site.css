@@ -147,3 +147,22 @@ body.menu-open #boxLayer { visibility: hidden; }
   .hero .lead { font-size: 15px; max-width: 32ch; }
   .hero-copy { gap: 18px; }
 }
+
+/* ---- Button motion: fill rises from below, label rolls, arrow slides through, slight magnetic pull, press-in ---- */
+.btn { position: relative; overflow: hidden; isolation: isolate; transition: transform .6s var(--ease), color .45s var(--ease), border-color .45s var(--ease), box-shadow .6s var(--ease); will-change: transform; }
+.btn::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; background: var(--fill, #1A0D06); transform: translateY(102%); border-top-left-radius: 50% 40%; border-top-right-radius: 50% 40%; transition: transform .7s var(--ease), border-radius .7s var(--ease); z-index: -1; }
+.btn:hover::before, .btn:focus-visible::before { transform: none; border-top-left-radius: inherit; border-top-right-radius: inherit; }
+.btn-primary, .btn-primary:hover { background: var(--choc); --fill: #1A0D06; }
+.btn-primary:hover { box-shadow: 0 14px 30px -14px rgba(36, 21, 12, .55); }
+.btn-secondary { --fill: var(--choc); }
+.btn-secondary:hover { color: var(--cream); border-color: var(--choc); background: transparent; }
+.btn-light { --fill: #fff; }
+.btn:active { transform: scale(.96) !important; transition-duration: .15s; }
+.btn .lbl { display: inline-block; overflow: hidden; vertical-align: top; line-height: 1.25; padding-block: .05em; }
+.btn .lbl > span { display: inline-block; text-shadow: 0 1.6em 0 currentColor; transition: transform .6s var(--ease); }
+.btn:hover .lbl > span { transform: translateY(-1.6em); }
+.btn .arr { display: inline-block; overflow: hidden; vertical-align: top; line-height: 1.25; padding-block: .05em; }
+.btn .arr > span { display: inline-block; text-shadow: -1.4em 0 0 currentColor; transition: transform .6s var(--ease) .05s; }
+.btn:hover .arr { transform: none; }
+.btn:hover .arr > span { transform: translateX(1.4em); }
+@media (prefers-reduced-motion: reduce) { .btn::before, .btn .lbl > span, .btn .arr > span { transition: none; } }

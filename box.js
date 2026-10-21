@@ -158,7 +158,7 @@ async function init() {
         clientY: logoClient ? logoClient.position.y : 0,
       },
     };
-    app.setZoom(parseFloat(layer.dataset.zoom || (innerWidth < 640 ? '1.45' : '0.85')));
+    app.setZoom(parseFloat(layer.dataset.zoom || (innerWidth < 640 ? '1.25' : '0.85')));
     clearTimeout(failTimer);
     layer.classList.remove('fallback');
     window.__nova = app; // handy for tuning from the console

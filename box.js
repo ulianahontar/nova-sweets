@@ -114,8 +114,8 @@ function applyPose(p, dt) {
   box.rotation.y = base.boxRotY + yaw;
   box.rotation.x = base.boxRotX + p.tilt + pointer.y * 0.06;
   hinge.rotation.x = base.hingeRotX - 105 * DEG * ease(clamp(p.lid));
-  sleeve.position.x = base.sleeveX + 460 * ease(clamp(p.sleeve));
-  sleeve.visible = p.sleeve < 0.92;
+  sleeve.position.x = base.sleeveX + 520 * ease(clamp(p.sleeve * 1.4));
+  sleeve.visible = p.sleeve < 0.55;
   logoNova.visible = p.logo < 0.5;
   if (logoClient) {
     logoClient.visible = p.logo >= 0.5;
@@ -158,7 +158,7 @@ async function init() {
         clientY: logoClient ? logoClient.position.y : 0,
       },
     };
-    app.setZoom(parseFloat(layer.dataset.zoom || (innerWidth < 640 ? '0.95' : '0.8')));
+    app.setZoom(parseFloat(layer.dataset.zoom || (innerWidth < 640 ? '1.45' : '0.85')));
     clearTimeout(failTimer);
     layer.classList.remove('fallback');
     window.__nova = app; // handy for tuning from the console

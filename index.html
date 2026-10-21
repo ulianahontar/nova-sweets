@@ -69,7 +69,7 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .switch button[aria-pressed="true"]{background:var(--choc);color:var(--cream)}
 .top .btn{padding:12px 20px;font-size:14px}
 @media (max-width:1080px){.nav{display:none}}
-@media (max-width:640px){.top .btn{display:none}.switch button{padding:7px 10px;font-size:12px}}
+@media (max-width:640px){.top .btn{padding:10px 14px;font-size:13px}.switch button{padding:7px 10px;font-size:12px}}
 
 /* hero */
 .hero{min-height:calc(100svh - 72px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding-block:clamp(40px,6vh,72px) 32px;overflow:hidden;text-align:center}
@@ -368,10 +368,18 @@ button.link{background:none;border:0;border-bottom:1px solid var(--t24);padding:
     </nav>
     <div class="actions">
       <a class="btn btn-primary" href="#contact">Request a quote</a>
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
     </div>
   </div>
 </header>
 
+<div class="mnav" id="mnav" hidden>
+  <nav aria-label="Mobile">
+    <a href="#collections">Collections</a><a href="#builder">Build a box</a><a href="#how">How it works</a><a href="#standards">Ingredients</a><a href="#hotels">Hotels &amp; cafés</a><a href="#faq">FAQ</a>
+  </nav>
+  <a class="btn btn-primary" href="#contact">Request a quote <span class="arr">→</span></a>
+  <p class="muted">Sugar-free sweets with your logo · EU &amp; USA</p>
+</div>
 <main id="top">
 <section class="hero" id="hero">
   <div class="watermark" aria-hidden="true">NOVA</div>
@@ -703,6 +711,13 @@ $('#form').addEventListener('submit',e=>{e.preventDefault();const f=e.target;let
  if(!ok)return;f.innerHTML=`<div class="sent"><b>Thank you, ${f.elements.name?f.elements.name.value:''}.</b><p class="lead">This is a concept site, so nothing was sent. On the real site you would get a price and a mock-up within one working day.</p></div>`;});
 document.querySelector('[data-hotel]').addEventListener('click',()=>{const s=$('#f-type');if(s)s.value='Hotel or café supply';});
 document.querySelector('[data-sample]').addEventListener('click',()=>{const s=$('#f-type');if(s)s.value='Sample box · €15';});
+</script>
+<script>
+(function(){const b=document.querySelector('.burger'),m=document.getElementById('mnav');
+function set(open){b.setAttribute('aria-expanded',open);b.classList.toggle('on',open);document.body.classList.toggle('menu-open',open);if(open){m.hidden=false;requestAnimationFrame(()=>m.classList.add('show'));}else{m.classList.remove('show');setTimeout(()=>{if(!m.classList.contains('show'))m.hidden=true;},450);}}
+b.addEventListener('click',()=>set(b.getAttribute('aria-expanded')!=='true'));
+m.addEventListener('click',e=>{if(e.target.closest('a'))set(false);});
+addEventListener('keydown',e=>{if(e.key==='Escape')set(false);});})();
 </script>
 <script type="module" src="motion.js"></script>
 <script type="module" src="box.js"></script>

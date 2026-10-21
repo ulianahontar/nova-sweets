@@ -299,7 +299,11 @@ form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}
 .field label{font:500 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--on-deep-60)}
 .field input,.field select,.field textarea{font:400 17px var(--sans);color:var(--on-deep);background:transparent;border:0;border-bottom:1px solid rgba(246,238,230,.28);padding:10px 0;border-radius:0;width:100%}
 .field select option{color:#222}
-.field textarea{min-height:96px;resize:vertical}
+.field textarea{min-height:0;height:46px;resize:none;overflow:hidden;line-height:1.5;display:block}
+.field input{height:46px}
+.field input[type=date]{-webkit-appearance:none;appearance:none;text-align:left}
+.field input[type=date]::-webkit-date-and-time-value{text-align:left}
+.field input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.5}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-bottom-color:var(--on-deep)}
 .field .err{font-size:13px;color:#E79A88;min-height:1em}
 .field.bad input{border-bottom-color:#E79A88}
@@ -601,8 +605,8 @@ button.link{background:none;border:0;border-bottom:1px solid var(--t24);padding:
       <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email"><span class="err"></span></div>
       <div class="field"><label for="f-type">Request</label><select id="f-type" name="type"><option>Gift boxes for a team</option><option>Gifts for clients</option><option>Hotel or café supply</option><option>Event Bites</option><option>Sample box · €15</option></select><span class="err"></span></div>
       <div class="field"><label for="f-qty">Quantity</label><input id="f-qty" name="qty" inputmode="numeric" value="50"><span class="err"></span></div>
-      <div class="field"><label for="f-date">Needed by</label><input id="f-date" name="date" type="date"><span class="err"></span></div>
-      <div class="field full"><label for="f-msg">Anything else</label><textarea id="f-msg" name="msg" placeholder="Occasion, delivery cities, dietary needs…"></textarea></div>
+      <div class="field"><label for="f-date">Needed by</label><input id="f-date" name="date" type="text" placeholder="e.g. 25 November" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'"><span class="err"></span></div>
+      <div class="field full"><label for="f-msg">Anything else</label><textarea id="f-msg" name="msg" rows="1" placeholder="Occasion, delivery cities, dietary needs…" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea></div>
       <div class="full"><button class="btn btn-light" type="submit">Send request <span class="arr">→</span></button></div>
     </form>
   </div>

@@ -100,3 +100,13 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 
   header.top { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(251, 246, 241, .97); }
 }
 #boxLayer.off { visibility: hidden; }
+
+/* Story sections: tighter rhythm, box fills its slot */
+.story { padding-block: clamp(56px, 7vw, 112px); }
+.story-slot { aspect-ratio: 1.15 / 1; }
+@media (max-width: 860px) {
+  .story-grid { gap: 8px; }
+  .story-slot { aspect-ratio: 4 / 3; max-width: 100%; margin-block: -12px; }
+  .mini-sweets { flex-wrap: nowrap; gap: 0; }
+  .mini-sweets img { width: 20%; height: auto; }
+}

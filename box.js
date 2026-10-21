@@ -88,10 +88,10 @@ function frame(now) {
     st = cur;
   }
   if (st) {
-    const L = layer.offsetWidth;
+    const L = layer.offsetWidth, LH = layer.offsetHeight;
     const s = (st.w * st.pose.size) / L;
     layer.dataset.scale = s;
-    layer.style.transform = `translate(${st.x - (L * s) / 2}px, ${st.y - (L * s) / 2}px) scale(${s})`;
+    layer.style.transform = `translate(${st.x - (L * s) / 2}px, ${st.y - (LH * s) / 2}px) scale(${s})`;
     const hidden = st.opacity < 0.01;
     layer.classList.toggle('off', hidden);
     layer.style.opacity = st.opacity.toFixed(3);
@@ -158,7 +158,7 @@ async function init() {
         clientY: logoClient ? logoClient.position.y : 0,
       },
     };
-    app.setZoom(parseFloat(layer.dataset.zoom || (innerWidth < 640 ? '1.05' : '0.8')));
+    app.setZoom(parseFloat(layer.dataset.zoom || (innerWidth < 640 ? '0.95' : '0.8')));
     clearTimeout(failTimer);
     layer.classList.remove('fallback');
     window.__nova = app; // handy for tuning from the console

@@ -130,3 +130,12 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 
 .mnav .btn { align-self: flex-start; }
 body.menu-open { overflow: hidden; }
 body.menu-open #boxLayer { visibility: hidden; }
+
+/* Canvas matches slot proportions so nothing (incl. the Spline badge) floats far from the box */
+#boxLayer { width: 600px; height: 520px; }
+@media (max-width: 640px) {
+  #boxLayer { width: 380px; height: 285px; }
+  .story { padding-block: 40px; }
+  .story-slot { margin-block: 0; }
+  .story-copy { gap: 16px; }
+}

@@ -663,7 +663,10 @@ const delivs=[{n:'One office',p:0},{n:'Home delivery',p:6}];
 let st={size:sizes[1],filter:'All',pack:packs[1],deliv:delivs[0],qty:50,slots:[]};
 function chipsHTML(list,cur,extra){return list.map(x=>`<button type="button" class="chip" aria-pressed="${x===cur}">${x.n}${extra?extra(x):''}</button>`).join('');}
 function setSize(n){st.size=sizes.find(s=>s.n===n)||st.size;st.slots=st.slots.slice(0,st.size.k);render();}
-function render(){
+let anchorEl=null;
+document.getElementById('builder').addEventListener('pointerdown',e=>{anchorEl=e.target.closest('.bstep,.total,.preview');},true);
+function render(){const a=anchorEl,t0=a?a.getBoundingClientRect().top:0;renderNow();if(a){const d=a.getBoundingClientRect().top-t0;if(Math.abs(d)>1)window.scrollBy(0,d);}anchorEl=null;}
+function renderNow(){
  $('#sizes').innerHTML=chipsHTML(sizes,st.size,x=>`<small>${x.k} · €${x.p}</small>`);[...$('#sizes').children].forEach((b,i)=>b.onclick=()=>setSize(sizes[i].n));
  const fl=['All','vegan','nut-free','keto'];$('#filters').innerHTML=fl.map(f=>`<button type="button" class="chip" aria-pressed="${f===st.filter}">${f[0].toUpperCase()+f.slice(1)}</button>`).join('');[...$('#filters').children].forEach((b,i)=>b.onclick=()=>{st.filter=fl[i];render();});
  $('#sweets').innerHTML=sweets.map((s,i)=>`<button type="button" class="sweet" data-i="${i}" ${st.filter!=='All'&&!s.t.includes(st.filter)?'disabled':''}><img class="sw" src="assets/${s.img}" alt=""><span><b>${s.n}</b><small>${s.t.join(' · ')}</small></span></button>`).join('');

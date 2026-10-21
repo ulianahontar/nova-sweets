@@ -166,3 +166,5 @@ body.menu-open #boxLayer { visibility: hidden; }
 .btn:hover .arr { transform: none; }
 .btn:hover .arr > span { transform: translateX(1.4em); }
 @media (prefers-reduced-motion: reduce) { .btn::before, .btn .lbl > span, .btn .arr > span { transition: none; } }
+.mnav[hidden] { display: none !important; }
+.mnav:not(.show) { pointer-events: none; }

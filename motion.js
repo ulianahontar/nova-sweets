@@ -5,6 +5,12 @@ const easeInOutQuart = (t) => (t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t
 
 let lenis = null;
 
+// Reload always starts at the top: no restored scroll, no jump to an old #hash.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+scrollTo(0, 0);
+addEventListener('pageshow', () => scrollTo(0, 0));
+
 async function initLenis() {
   // touch devices keep native scrolling: it is already smooth and never fights sticky/fixed layers
   if (reduce || matchMedia('(hover: none), (pointer: coarse)').matches) return;
@@ -47,7 +53,6 @@ document.addEventListener('click', (e) => {
   const duration = Math.min(2.4, 1.1 + dist / 4000);
   if (lenis) lenis.scrollTo(y, { duration, easing: easeInOutQuart });
   else glideTo(y, duration * 1000);
-  history.replaceState(null, '', id);
 });
 
 // Count-up when numbers come into view.
